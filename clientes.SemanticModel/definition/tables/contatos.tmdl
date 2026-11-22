@@ -1,0 +1,88 @@
+table contatos
+	lineageTag: 5a67b3c2-0669-44ff-87a5-4a74c88f4378
+
+	column id
+		dataType: int64
+		formatString: 0
+		lineageTag: d91e4a5f-789e-4320-b399-0506ab7e24c6
+		summarizeBy: sum
+		sourceColumn: id
+
+		annotation SummarizationSetBy = Automatic
+
+	column nome
+		dataType: string
+		lineageTag: d11e733a-95ed-4f5b-82a5-1cf660d849ee
+		summarizeBy: none
+		sourceColumn: nome
+
+		annotation SummarizationSetBy = Automatic
+
+	column sobrenome
+		dataType: string
+		lineageTag: 31c64cf0-9e39-4f09-b560-08d9866737e8
+		summarizeBy: none
+		sourceColumn: sobrenome
+
+		annotation SummarizationSetBy = Automatic
+
+	column email
+		dataType: string
+		lineageTag: b0ca4139-50d9-4140-989c-2b98916acc19
+		summarizeBy: none
+		sourceColumn: email
+
+		annotation SummarizationSetBy = Automatic
+
+	column telefone
+		dataType: string
+		lineageTag: 2a6fd68b-4641-4442-a078-3515e6a3a464
+		summarizeBy: none
+		sourceColumn: telefone
+
+		annotation SummarizationSetBy = Automatic
+
+	column endereco
+		dataType: string
+		lineageTag: d5f7b374-f7bb-4316-86b2-7b3f01143689
+		summarizeBy: none
+		sourceColumn: endereco
+
+		annotation SummarizationSetBy = Automatic
+
+	column codigo_postal
+		dataType: string
+		lineageTag: a9ebf66a-5693-4c8f-b61f-2bd37aad6ae3
+		summarizeBy: none
+		sourceColumn: codigo_postal
+
+		annotation SummarizationSetBy = Automatic
+
+	column cidade
+		dataType: string
+		lineageTag: 6d72c6bc-746d-488b-a298-590f1e48d117
+		summarizeBy: none
+		sourceColumn: cidade
+
+		annotation SummarizationSetBy = Automatic
+
+	column distrito
+		dataType: string
+		lineageTag: 3d79300e-a82e-49b7-836e-b6179baf5934
+		summarizeBy: none
+		sourceColumn: distrito
+
+		annotation SummarizationSetBy = Automatic
+
+	partition contatos = m
+		mode: import
+		source =
+				let
+				  Origem = Csv.Document(File.Contents("C:\Users\ResTIC55\Desktop\Projetos\power-bi\contatos.csv"), [Delimiter = ",", Columns = 9, Encoding = 65001, QuoteStyle = QuoteStyle.None]),
+				  #"Cabeçalhos promovidos" = Table.PromoteHeaders(Origem, [PromoteAllScalars = true]),
+				  #"Tipo de coluna alterado" = Table.TransformColumnTypes(#"Cabeçalhos promovidos", {{"id", Int64.Type}, {"nome", type text}, {"sobrenome", type text}, {"email", type text}, {"telefone", type text}, {"endereco", type text}, {"codigo_postal", type text}, {"cidade", type text}, {"distrito", type text}})
+				in
+				  #"Tipo de coluna alterado"
+
+	annotation PBI_ResultType = Table
+
