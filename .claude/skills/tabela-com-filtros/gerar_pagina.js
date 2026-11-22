@@ -6,17 +6,23 @@
 //
 // Spec (caminhos relativos ao ficheiro spec):
 // {
-//   "report": "../../clientes.Report",     // pasta .Report
+//   "report": "../../clientes/clientes.Report", // pasta .Report
 //   "page": "Contatos",                    // displayName da página (cria se não existir)
 //   "title": "Contatos",                   // opcional; por omissão = page
 //   "table": "contatos",                   // tabela do modelo semântico
+//   "aplicar": true,                       // opcional: botões "Aplicar filtros" / "Limpar filtros"
 //   "columns": [
 //     { "field": "id", "label": "ID", "search": true },
+//     { "field": "email", "label": "E-mail", "tipo": "texto" },
 //     { "field": "cidade", "label": "Cidade", "search": false, "filter": true }
 //   ]
 // }
 // - "filter": false  -> a coluna aparece na tabela mas não tem filtro lateral (por omissão true)
-// - "search": true   -> o filtro tem caixa de pesquisa (use para colunas com muitos valores)
+// - "search": true   -> o filtro (lista) tem caixa de pesquisa (colunas com muitos valores)
+// - "tipo": "texto"  -> filtro de texto (escreve-se o valor; não carrega lista). Para colunas
+//                       quase únicas: e-mail, telefone, endereço, códigos. Só colunas de texto.
+// - "aplicar": true  -> as seleções ficam pendentes até clicar em "Aplicar filtros"
+//                       (reduz consultas em tabelas grandes); inclui também "Limpar filtros".
 const fs = require('fs');
 const path = require('path');
 const crypto = require('crypto');
@@ -38,7 +44,7 @@ if (!fs.existsSync(pagesDir)) throw new Error(`Pasta de páginas não encontrada
 const VERDE = '#117865';
 const PAGE_W = 1920, PAGE_H_MIN = 1080, M = 24;
 const TITLE_H = 56, TOP = 88;
-const SL_W = 320, SL_H = 80, GAP = 16;
+const SL_W = 320, SL_H = 80, GAP = 16, BTN_H = 40;
 const SCHEMAS = {
   visual: 'https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.9.0/schema.json',
   page: 'https://developer.microsoft.com/json-schemas/fabric/item/report/definition/page/2.1.0/schema.json',
@@ -93,7 +99,9 @@ fs.mkdirSync(visualsDir, { recursive: true });
 
 // ---------- Layout ----------
 const filtros = spec.columns.filter(c => c.filter !== false);
-const altFiltros = TOP + filtros.length * SL_H + Math.max(0, filtros.length - 1) * GAP + M;
+const comBotoes = !!spec.aplicar && filtros.length > 0;
+const altFiltros = TOP + filtros.length * SL_H + Math.max(0, filtros.length - 1) * GAP
+  + (comBotoes ? GAP + BTN_H : 0) + M;
 const PAGE_H = Math.max(PAGE_H_MIN, Math.ceil(altFiltros / 8) * 8);
 const visuals = [];
 let tab = 0;
@@ -142,10 +150,40 @@ visuals.push({
 
 // Filtros laterais
 filtros.forEach((c, i) => {
+  const position = { x: M, y: TOP + i * (SL_H + GAP), z: 1000 + i, height: SL_H, width: SL_W, tabOrder: tab++ };
+  if (c.tipo === 'texto') {
+    // Filtro de texto: título no VCO (o textSlicer não tem "header").
+    visuals.push({
+      $schema: SCHEMAS.visual,
+      name: nome(`slicer_${i}_${c.field}`),
+      position,
+      visual: {
+        visualType: 'textSlicer',
+        query: { queryState: { Values: { projections: [col(c.field)] } } },
+        objects: {
+          inputText: [{ properties: { placeholder: lit(`'Pesquisar ${esc((c.label || c.field).toLowerCase())}…'`) } }],
+        },
+        // Aparência alinhada com os filtros em lista: sem cartão, sem subtítulo,
+        // título pequeno em Semibold.
+        visualContainerObjects: {
+          title: [{ properties: {
+            show: lit('true'), text: lit(`'${esc(c.label || c.field)}'`),
+            fontSize: lit('10D'), fontFamily: lit("'Segoe UI Semibold'"), bold: lit('false'),
+          } }],
+          subTitle: [{ properties: { show: lit('false') } }],
+          background: [{ properties: { show: lit('false') } }],
+          border: [{ properties: { show: lit('false') } }],
+          dropShadow: [{ properties: { show: lit('false') } }],
+          padding: [{ properties: pad(8) }],
+        },
+      },
+    });
+    return;
+  }
   visuals.push({
     $schema: SCHEMAS.visual,
     name: nome(`slicer_${i}_${c.field}`),
-    position: { x: M, y: TOP + i * (SL_H + GAP), z: 1000 + i, height: SL_H, width: SL_W, tabOrder: tab++ },
+    position,
     visual: {
       visualType: 'slicer',
       query: { queryState: { Values: { projections: [col(c.field)] } } },
@@ -158,6 +196,50 @@ filtros.forEach((c, i) => {
     },
   });
 });
+
+// Botões "Aplicar filtros" (verde) e "Limpar filtros" (contorno) por baixo dos filtros
+if (comBotoes) {
+  const y = TOP + filtros.length * (SL_H + GAP);
+  const w = (SL_W - GAP) / 2;
+  const botao = (chave, x, texto, acao, dica, primario) => ({
+    $schema: SCHEMAS.visual,
+    name: nome(chave),
+    position: { x, y, z: 1500, height: BTN_H, width: w, tabOrder: tab++ },
+    visual: {
+      visualType: 'actionButton',
+      objects: {
+        text: [
+          { properties: { show: lit('true') } },
+          { properties: { text: lit(`'${texto}'`), fontSize: lit('11D'), fontColor: cor(primario ? '#FFFFFF' : VERDE), horizontalAlignment: lit("'center'") }, selector: { id: 'default' } },
+        ],
+        icon: [
+          { properties: { show: lit('false') } },
+          { properties: { placement: lit("'left'") }, selector: { id: 'default' } },
+        ],
+        fill: [
+          { properties: { show: lit(primario ? 'true' : 'false') } },
+          { properties: { fillColor: cor(VERDE) }, selector: { id: 'default' } },
+        ],
+        outline: [
+          { properties: { show: lit(primario ? 'false' : 'true') } },
+          { properties: { lineColor: cor(VERDE), weight: lit('1D') }, selector: { id: 'default' } },
+        ],
+        shape: [
+          { properties: { tileShape: lit("'rectangleRounded'"), roundEdge: lit('6L') } },
+          { properties: { tileShape: lit("'rectangleRounded'") }, selector: { id: 'default' } },
+        ],
+      },
+      visualContainerObjects: {
+        background: [{ properties: { show: lit('false') } }],
+        border: [{ properties: { show: lit('false') } }],
+        visualLink: [{ properties: { show: lit('true'), type: lit(`'${acao}'`), tooltip: lit(`'${dica}'`) } }],
+      },
+    },
+    howCreated: 'InsertVisualButton',
+  });
+  visuals.push(botao('btn_aplicar', M, 'Aplicar filtros', 'ApplyAllSlicers', 'Aplicar as seleções dos filtros', true));
+  visuals.push(botao('btn_limpar', M + w + GAP, 'Limpar filtros', 'ClearAllSlicers', 'Limpar todos os filtros da página', false));
+}
 
 // Tabela
 const TB_X = filtros.length ? M + SL_W + M : M;
@@ -202,6 +284,9 @@ garantirSchema(path.join(pbipDir, `${reportBase}.pbip`), SCHEMAS.pbip);
 
 console.log(JSON.stringify({
   page: spec.page, pageId, criada, visuais: visuals.length,
-  filtros: filtros.length, pesquisa: filtros.filter(c => c.search).map(c => c.field),
+  filtros: filtros.length,
+  pesquisa: filtros.filter(c => c.search && c.tipo !== 'texto').map(c => c.field),
+  texto: filtros.filter(c => c.tipo === 'texto').map(c => c.field),
+  botoesAplicar: comBotoes,
   altura: PAGE_H, pasta: pageDir,
 }, null, 2));

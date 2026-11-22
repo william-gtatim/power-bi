@@ -1,13 +1,13 @@
 {
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.9.0/schema.json",
-  "name": "3bc02b74eb6631119f95",
+  "name": "678986d98beeb6d008b8",
   "position": {
     "x": 24,
-    "y": 664,
-    "z": 1006,
+    "y": 88,
+    "z": 1000,
     "height": 80,
     "width": 320,
-    "tabOrder": 8
+    "tabOrder": 2
   },
   "visual": {
     "visualType": "slicer",
@@ -23,11 +23,11 @@
                       "Entity": "contatos"
                     }
                   },
-                  "Property": "codigo_postal"
+                  "Property": "id"
                 }
               },
-              "queryRef": "contatos.codigo_postal",
-              "nativeQueryRef": "codigo_postal"
+              "queryRef": "contatos.id",
+              "nativeQueryRef": "id"
             }
           ]
         }
@@ -60,7 +60,7 @@
             "text": {
               "expr": {
                 "Literal": {
-                  "Value": "'Código postal'"
+                  "Value": "'ID'"
                 }
               }
             }

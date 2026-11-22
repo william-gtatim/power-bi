@@ -1,13 +1,13 @@
 {
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.9.0/schema.json",
-  "name": "7fbb4e2cd346e42d0bee",
+  "name": "dbad41690cf0af4d2ae3",
   "position": {
     "x": 24,
-    "y": 280,
-    "z": 1002,
+    "y": 856,
+    "z": 1008,
     "height": 80,
     "width": 320,
-    "tabOrder": 4
+    "tabOrder": 10
   },
   "visual": {
     "visualType": "slicer",
@@ -23,11 +23,11 @@
                       "Entity": "contatos"
                     }
                   },
-                  "Property": "sobrenome"
+                  "Property": "distrito"
                 }
               },
-              "queryRef": "contatos.sobrenome",
-              "nativeQueryRef": "sobrenome"
+              "queryRef": "contatos.distrito",
+              "nativeQueryRef": "distrito"
             }
           ]
         }
@@ -60,20 +60,7 @@
             "text": {
               "expr": {
                 "Literal": {
-                  "Value": "'Sobrenome'"
-                }
-              }
-            }
-          }
-        }
-      ],
-      "general": [
-        {
-          "properties": {
-            "selfFilterEnabled": {
-              "expr": {
-                "Literal": {
-                  "Value": "true"
+                  "Value": "'Distrito'"
                 }
               }
             }

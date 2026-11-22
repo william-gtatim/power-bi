@@ -1,13 +1,13 @@
 {
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.9.0/schema.json",
-  "name": "54b078604029e1084aa8",
+  "name": "47bd9f023027461fa457",
   "position": {
     "x": 24,
-    "y": 760,
-    "z": 1007,
+    "y": 184,
+    "z": 1001,
     "height": 80,
     "width": 320,
-    "tabOrder": 9
+    "tabOrder": 3
   },
   "visual": {
     "visualType": "slicer",
@@ -23,11 +23,11 @@
                       "Entity": "contatos"
                     }
                   },
-                  "Property": "cidade"
+                  "Property": "nome"
                 }
               },
-              "queryRef": "contatos.cidade",
-              "nativeQueryRef": "cidade"
+              "queryRef": "contatos.nome",
+              "nativeQueryRef": "nome"
             }
           ]
         }
@@ -60,7 +60,20 @@
             "text": {
               "expr": {
                 "Literal": {
-                  "Value": "'Cidade'"
+                  "Value": "'Nome'"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "general": [
+        {
+          "properties": {
+            "selfFilterEnabled": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
                 }
               }
             }

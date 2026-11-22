@@ -7,9 +7,9 @@ model Model
 		legacyRedirects
 		returnErrorValuesAsNull
 
-annotation __PBI_TimeIntelligenceEnabled = 1
+annotation __PBI_TimeIntelligenceEnabled = 0
 
-annotation PBI_QueryOrder = ["contatos"]
+annotation PBI_QueryOrder = ["contatos","PastaDados"]
 
 annotation PBI_ProTooling = ["DevMode","MCP-PBIModeling"]
 

@@ -1,13 +1,13 @@
 {
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.9.0/schema.json",
-  "name": "a29a0327d8cc281c7d9d",
+  "name": "466ac75857caa68aecaf",
   "position": {
     "x": 24,
-    "y": 568,
-    "z": 1005,
+    "y": 472,
+    "z": 1004,
     "height": 80,
     "width": 320,
-    "tabOrder": 7
+    "tabOrder": 6
   },
   "visual": {
     "visualType": "slicer",
@@ -23,11 +23,11 @@
                       "Entity": "contatos"
                     }
                   },
-                  "Property": "endereco"
+                  "Property": "telefone"
                 }
               },
-              "queryRef": "contatos.endereco",
-              "nativeQueryRef": "endereco"
+              "queryRef": "contatos.telefone",
+              "nativeQueryRef": "telefone"
             }
           ]
         }
@@ -60,7 +60,7 @@
             "text": {
               "expr": {
                 "Literal": {
-                  "Value": "'Endereço'"
+                  "Value": "'Telefone'"
                 }
               }
             }

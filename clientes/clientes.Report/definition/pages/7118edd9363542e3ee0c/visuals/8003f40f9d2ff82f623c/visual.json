@@ -1,13 +1,13 @@
 {
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.9.0/schema.json",
-  "name": "b2f431d47a8e6a651a4e",
+  "name": "8003f40f9d2ff82f623c",
   "position": {
     "x": 24,
-    "y": 184,
-    "z": 1001,
+    "y": 376,
+    "z": 1003,
     "height": 80,
     "width": 320,
-    "tabOrder": 3
+    "tabOrder": 5
   },
   "visual": {
     "visualType": "slicer",
@@ -23,11 +23,11 @@
                       "Entity": "contatos"
                     }
                   },
-                  "Property": "nome"
+                  "Property": "email"
                 }
               },
-              "queryRef": "contatos.nome",
-              "nativeQueryRef": "nome"
+              "queryRef": "contatos.email",
+              "nativeQueryRef": "email"
             }
           ]
         }
@@ -60,7 +60,7 @@
             "text": {
               "expr": {
                 "Literal": {
-                  "Value": "'Nome'"
+                  "Value": "'E-mail'"
                 }
               }
             }

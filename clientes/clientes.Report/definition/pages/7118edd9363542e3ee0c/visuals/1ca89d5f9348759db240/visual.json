@@ -1,70 +1,35 @@
 {
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.9.0/schema.json",
-  "name": "0efbda1a3fcefbbb8532",
+  "name": "1ca89d5f9348759db240",
   "position": {
     "x": 24,
-    "y": 68,
-    "z": 1,
-    "height": 4,
-    "width": 56,
-    "tabOrder": 1
+    "y": 16,
+    "z": 0,
+    "height": 56,
+    "width": 1872,
+    "tabOrder": 0
   },
   "visual": {
-    "visualType": "shape",
+    "visualType": "textbox",
     "objects": {
-      "shape": [
+      "general": [
         {
           "properties": {
-            "tileShape": {
-              "expr": {
-                "Literal": {
-                  "Value": "'rectangle'"
-                }
-              }
-            }
-          }
-        }
-      ],
-      "fill": [
-        {
-          "properties": {
-            "fillColor": {
-              "solid": {
-                "color": {
-                  "expr": {
-                    "Literal": {
-                      "Value": "'#117865'"
+            "paragraphs": [
+              {
+                "textRuns": [
+                  {
+                    "value": "Contatos",
+                    "textStyle": {
+                      "fontFamily": "Segoe UI Semibold",
+                      "fontSize": "28px",
+                      "color": "#252423"
                     }
                   }
-                }
+                ],
+                "horizontalTextAlignment": "left"
               }
-            },
-            "transparency": {
-              "expr": {
-                "Literal": {
-                  "Value": "0D"
-                }
-              }
-            }
-          },
-          "selector": {
-            "id": "default"
-          }
-        }
-      ],
-      "outline": [
-        {
-          "properties": {
-            "show": {
-              "expr": {
-                "Literal": {
-                  "Value": "false"
-                }
-              }
-            }
-          },
-          "selector": {
-            "id": "default"
+            ]
           }
         }
       ]

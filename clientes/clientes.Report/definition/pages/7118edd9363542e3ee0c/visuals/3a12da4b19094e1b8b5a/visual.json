@@ -1,94 +1,102 @@
 {
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.9.0/schema.json",
-  "name": "b1a31152087c9e05d9a8",
+  "name": "3a12da4b19094e1b8b5a",
   "position": {
     "x": 24,
-    "y": 16,
-    "z": 0,
-    "height": 56,
-    "width": 1872,
-    "tabOrder": 0
+    "y": 760,
+    "z": 1007,
+    "height": 80,
+    "width": 320,
+    "tabOrder": 9
   },
   "visual": {
-    "visualType": "textbox",
+    "visualType": "slicer",
+    "query": {
+      "queryState": {
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "contatos"
+                    }
+                  },
+                  "Property": "cidade"
+                }
+              },
+              "queryRef": "contatos.cidade",
+              "nativeQueryRef": "cidade"
+            }
+          ]
+        }
+      }
+    },
     "objects": {
-      "general": [
+      "data": [
         {
           "properties": {
-            "paragraphs": [
-              {
-                "textRuns": [
-                  {
-                    "value": "Contatos",
-                    "textStyle": {
-                      "fontFamily": "Segoe UI Semibold",
-                      "fontSize": "28px",
-                      "color": "#252423"
-                    }
-                  }
-                ],
-                "horizontalTextAlignment": "left"
+            "mode": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Dropdown'"
+                }
               }
-            ]
+            }
+          }
+        }
+      ],
+      "header": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Cidade'"
+                }
+              }
+            }
           }
         }
       ]
     },
     "visualContainerObjects": {
-      "background": [
-        {
-          "properties": {
-            "show": {
-              "expr": {
-                "Literal": {
-                  "Value": "false"
-                }
-              }
-            }
-          }
-        }
-      ],
-      "border": [
-        {
-          "properties": {
-            "show": {
-              "expr": {
-                "Literal": {
-                  "Value": "false"
-                }
-              }
-            }
-          }
-        }
-      ],
       "padding": [
         {
           "properties": {
             "top": {
               "expr": {
                 "Literal": {
-                  "Value": "0D"
+                  "Value": "8D"
                 }
               }
             },
             "bottom": {
               "expr": {
                 "Literal": {
-                  "Value": "0D"
+                  "Value": "8D"
                 }
               }
             },
             "left": {
               "expr": {
                 "Literal": {
-                  "Value": "0D"
+                  "Value": "8D"
                 }
               }
             },
             "right": {
               "expr": {
                 "Literal": {
-                  "Value": "0D"
+                  "Value": "8D"
                 }
               }
             }
