@@ -1,0 +1,4 @@
+/// Pasta onde estão os ficheiros de dados (termina em \).
+expression PastaDados = "C:\Users\ResTIC55\Desktop\Projetos\power-bi\clientes\" meta [IsParameterQuery=true, Type="Text", IsParameterQueryRequired=true]
+	lineageTag: b82359c3-d369-4d35-9b0e-e27ef5c0af8d
+

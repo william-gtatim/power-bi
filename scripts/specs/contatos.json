@@ -1,0 +1,17 @@
+{
+  "report": "../../clientes/clientes.Report",
+  "page": "Contatos",
+  "title": "Contatos",
+  "table": "contatos",
+  "columns": [
+    { "field": "id", "label": "ID", "search": true },
+    { "field": "nome", "label": "Nome", "search": true },
+    { "field": "sobrenome", "label": "Sobrenome", "search": true },
+    { "field": "email", "label": "E-mail", "search": true },
+    { "field": "telefone", "label": "Telefone", "search": true },
+    { "field": "endereco", "label": "Endereço", "search": true },
+    { "field": "codigo_postal", "label": "Código postal", "search": true },
+    { "field": "cidade", "label": "Cidade", "search": false },
+    { "field": "distrito", "label": "Distrito", "search": false }
+  ]
+}

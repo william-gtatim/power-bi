@@ -1,0 +1,217 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.9.0/schema.json",
+  "name": "fbf0e139ad381bd66c89",
+  "position": {
+    "x": 368,
+    "y": 88,
+    "z": 2000,
+    "height": 968,
+    "width": 1528,
+    "tabOrder": 11
+  },
+  "visual": {
+    "visualType": "tableEx",
+    "query": {
+      "queryState": {
+        "Values": {
+          "projections": [
+            {
+              "displayName": "ID",
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "contatos"
+                    }
+                  },
+                  "Property": "id"
+                }
+              },
+              "queryRef": "contatos.id",
+              "nativeQueryRef": "id"
+            },
+            {
+              "displayName": "Nome",
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "contatos"
+                    }
+                  },
+                  "Property": "nome"
+                }
+              },
+              "queryRef": "contatos.nome",
+              "nativeQueryRef": "nome"
+            },
+            {
+              "displayName": "Sobrenome",
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "contatos"
+                    }
+                  },
+                  "Property": "sobrenome"
+                }
+              },
+              "queryRef": "contatos.sobrenome",
+              "nativeQueryRef": "sobrenome"
+            },
+            {
+              "displayName": "E-mail",
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "contatos"
+                    }
+                  },
+                  "Property": "email"
+                }
+              },
+              "queryRef": "contatos.email",
+              "nativeQueryRef": "email"
+            },
+            {
+              "displayName": "Telefone",
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "contatos"
+                    }
+                  },
+                  "Property": "telefone"
+                }
+              },
+              "queryRef": "contatos.telefone",
+              "nativeQueryRef": "telefone"
+            },
+            {
+              "displayName": "Endereço",
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "contatos"
+                    }
+                  },
+                  "Property": "endereco"
+                }
+              },
+              "queryRef": "contatos.endereco",
+              "nativeQueryRef": "endereco"
+            },
+            {
+              "displayName": "Código postal",
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "contatos"
+                    }
+                  },
+                  "Property": "codigo_postal"
+                }
+              },
+              "queryRef": "contatos.codigo_postal",
+              "nativeQueryRef": "codigo_postal"
+            },
+            {
+              "displayName": "Cidade",
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "contatos"
+                    }
+                  },
+                  "Property": "cidade"
+                }
+              },
+              "queryRef": "contatos.cidade",
+              "nativeQueryRef": "cidade"
+            },
+            {
+              "displayName": "Distrito",
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "contatos"
+                    }
+                  },
+                  "Property": "distrito"
+                }
+              },
+              "queryRef": "contatos.distrito",
+              "nativeQueryRef": "distrito"
+            }
+          ]
+        }
+      }
+    },
+    "objects": {
+      "total": [
+        {
+          "properties": {
+            "totals": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "grid": [
+        {
+          "properties": {
+            "outlineColor": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#117865'"
+                    }
+                  }
+                }
+              }
+            },
+            "outlineWeight": {
+              "expr": {
+                "Literal": {
+                  "Value": "2D"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "columnHeaders": [
+        {
+          "properties": {
+            "columnAdjustment": {
+              "expr": {
+                "Literal": {
+                  "Value": "'growToFit'"
+                }
+              }
+            },
+            "autoSizeColumnWidth": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}

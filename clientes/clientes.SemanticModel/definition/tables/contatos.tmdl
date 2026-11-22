@@ -5,10 +5,10 @@ table contatos
 		dataType: int64
 		formatString: 0
 		lineageTag: d91e4a5f-789e-4320-b399-0506ab7e24c6
-		summarizeBy: sum
+		summarizeBy: none
 		sourceColumn: id
 
-		annotation SummarizationSetBy = Automatic
+		annotation SummarizationSetBy = User
 
 	column nome
 		dataType: string
@@ -78,7 +78,7 @@ table contatos
 		mode: import
 		source =
 				let
-				  Origem = Csv.Document(File.Contents("C:\Users\ResTIC55\Desktop\Projetos\power-bi\contatos.csv"), [Delimiter = ",", Columns = 9, Encoding = 65001, QuoteStyle = QuoteStyle.None]),
+				  Origem = Csv.Document(File.Contents(PastaDados & "contatos.csv"), [Delimiter = ",", Columns = 9, Encoding = 65001, QuoteStyle = QuoteStyle.Csv]),
 				  #"Cabeçalhos promovidos" = Table.PromoteHeaders(Origem, [PromoteAllScalars = true]),
 				  #"Tipo de coluna alterado" = Table.TransformColumnTypes(#"Cabeçalhos promovidos", {{"id", Int64.Type}, {"nome", type text}, {"sobrenome", type text}, {"email", type text}, {"telefone", type text}, {"endereco", type text}, {"codigo_postal", type text}, {"cidade", type text}, {"distrito", type text}})
 				in
