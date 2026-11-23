@@ -1,0 +1,108 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/page/2.1.0/schema.json",
+  "name": "5d508f263e234109b405",
+  "displayName": "Colaboradores",
+  "displayOption": "FitToPage",
+  "height": 1080,
+  "width": 1920,
+  "filterConfig": {
+    "filters": [
+      {
+        "name": "Filterd8478c1a724e0c23d633",
+        "displayName": "ID",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "colaboradores"
+              }
+            },
+            "Property": "id"
+          }
+        },
+        "type": "Categorical",
+        "howCreated": "User"
+      },
+      {
+        "name": "Filter2d0918c13861c5fb2e22",
+        "displayName": "Sexo",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "colaboradores"
+              }
+            },
+            "Property": "sexo"
+          }
+        },
+        "type": "Categorical",
+        "howCreated": "User"
+      },
+      {
+        "name": "Filter812fdd316432807e2348",
+        "displayName": "Data de nascimento",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "colaboradores"
+              }
+            },
+            "Property": "data_nascimento"
+          }
+        },
+        "type": "Categorical",
+        "howCreated": "User"
+      },
+      {
+        "name": "Filtera6593668f1578ecf7647",
+        "displayName": "Direção",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "colaboradores"
+              }
+            },
+            "Property": "direcao"
+          }
+        },
+        "type": "Categorical",
+        "howCreated": "User"
+      },
+      {
+        "name": "Filter26681ac443701c347faa",
+        "displayName": "Data de admissão",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "colaboradores"
+              }
+            },
+            "Property": "data_admissao"
+          }
+        },
+        "type": "Categorical",
+        "howCreated": "User"
+      },
+      {
+        "name": "Filter3898595a3d082125e0f7",
+        "displayName": "Data de saída",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "colaboradores"
+              }
+            },
+            "Property": "data_saida"
+          }
+        },
+        "type": "Categorical",
+        "howCreated": "User"
+      }
+    ]
+  }
+}

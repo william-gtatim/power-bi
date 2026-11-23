@@ -1,0 +1,263 @@
+cultureInfo pt-BR
+
+	linguisticMetadata =
+			{
+			  "Version": "2.0.0",
+			  "Language": "en-US",
+			  "Entities": {
+			    "colaboradores.id": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "colaboradores",
+			          "ConceptualProperty": "id"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "ID": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "colaboradores.nome": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "colaboradores",
+			          "ConceptualProperty": "nome"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Nome": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "colaboradores.sobrenome": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "colaboradores",
+			          "ConceptualProperty": "sobrenome"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Sobrenome": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "colaboradores.departamento": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "colaboradores",
+			          "ConceptualProperty": "departamento"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Departamento": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "colaboradores.cargo": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "colaboradores",
+			          "ConceptualProperty": "cargo"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Cargo": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "colaboradores.nivel": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "colaboradores",
+			          "ConceptualProperty": "nivel"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Nível": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "colaboradores.chefia": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "colaboradores",
+			          "ConceptualProperty": "chefia"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Chefia": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "colaboradores.distrito": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "colaboradores",
+			          "ConceptualProperty": "distrito"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Distrito": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "colaboradores.tipo_contrato": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "colaboradores",
+			          "ConceptualProperty": "tipo_contrato"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Tipo de contrato": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "colaboradores.data_admissao": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "colaboradores",
+			          "ConceptualProperty": "data_admissao"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Data de admissão": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "colaboradores.data_saida": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "colaboradores",
+			          "ConceptualProperty": "data_saida"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Data de saída": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "colaboradores.motivo_saida": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "colaboradores",
+			          "ConceptualProperty": "motivo_saida"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Motivo de saída": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    }
+			  }
+			}
+		contentType: json
+

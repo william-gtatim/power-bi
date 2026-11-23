@@ -1,0 +1,12 @@
+/// Servidor PostgreSQL (Neon).
+expression Servidor = "ep-blue-pond-beysn29j-pooler.c-9.us-east-2.aws.neon.tech" meta [IsParameterQuery=true, Type="Text", IsParameterQueryRequired=true]
+	lineageTag: d8af4fb3-fb81-47ac-b923-4859c475d05d
+
+	annotation PBI_ResultType = Text
+
+/// Base de dados PostgreSQL.
+expression BaseDados = "neondb" meta [IsParameterQuery=true, Type="Text", IsParameterQueryRequired=true]
+	lineageTag: 0c313f72-40fa-4d16-943f-45cf39718bda
+
+	annotation PBI_ResultType = Text
+

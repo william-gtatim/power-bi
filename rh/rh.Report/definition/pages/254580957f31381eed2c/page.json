@@ -1,0 +1,48 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/page/2.1.0/schema.json",
+  "name": "254580957f31381eed2c",
+  "displayName": "Detalhe do colaborador",
+  "displayOption": "FitToPage",
+  "height": 1080,
+  "width": 1920,
+  "visibility": "HiddenInViewMode",
+  "filterConfig": {
+    "filters": [
+      {
+        "name": "Filter6f93f0cc186d6fac1eff",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "colaboradores"
+              }
+            },
+            "Property": "id"
+          }
+        },
+        "type": "Categorical",
+        "howCreated": "Drillthrough"
+      }
+    ]
+  },
+  "pageBinding": {
+    "name": "Pod",
+    "type": "Drillthrough",
+    "parameters": [
+      {
+        "name": "Param_Filter6f93f0cc186d6fac1eff",
+        "boundFilter": "Filter6f93f0cc186d6fac1eff",
+        "fieldExpr": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "colaboradores"
+              }
+            },
+            "Property": "id"
+          }
+        }
+      }
+    ]
+  }
+}

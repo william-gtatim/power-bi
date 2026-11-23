@@ -1,0 +1,117 @@
+/// Colaboradores com os nomes de departamento, cargo e chefia (vista rh.vw_colaboradores).
+table colaboradores
+	lineageTag: 7d62e7d2-cff6-4f6a-9aaa-15344a13caf7
+
+	column id
+		dataType: int64
+		formatString: 0
+		lineageTag: 90d38357-eadb-4927-91e9-f0a91c18fb89
+		summarizeBy: none
+		sourceColumn: id
+
+		annotation SummarizationSetBy = User
+
+	column nome
+		dataType: string
+		lineageTag: f25c8eda-a5e3-46c3-835d-1b51d7c0d979
+		summarizeBy: none
+		sourceColumn: nome
+
+	column sobrenome
+		dataType: string
+		lineageTag: e1829c9e-a6c0-444a-8bb4-3e35e8c33ffc
+		summarizeBy: none
+		sourceColumn: sobrenome
+
+	column sexo
+		dataType: string
+		lineageTag: 03294385-c958-4cee-8171-80bc7b0d2e19
+		summarizeBy: none
+		sourceColumn: sexo
+
+	column data_nascimento
+		dataType: dateTime
+		formatString: dd/MM/yyyy
+		lineageTag: b4ec4584-1f0e-4a05-b89e-51e0b4304cfc
+		summarizeBy: none
+		sourceColumn: data_nascimento
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column distrito
+		dataType: string
+		lineageTag: e55111ac-d233-4ee1-ba62-bb7a78e82355
+		dataCategory: StateOrProvince
+		summarizeBy: none
+		sourceColumn: distrito
+
+	column departamento
+		dataType: string
+		lineageTag: 27e773c1-a02e-4982-9154-d854a5acb046
+		summarizeBy: none
+		sourceColumn: departamento
+
+	column direcao
+		dataType: string
+		lineageTag: b7b1d50c-a802-4ffe-97d8-3e7bf7331509
+		summarizeBy: none
+		sourceColumn: direcao
+
+	column cargo
+		dataType: string
+		lineageTag: 65942246-7fa3-4eed-88d7-df0cdbebd672
+		summarizeBy: none
+		sourceColumn: cargo
+
+	column nivel
+		dataType: string
+		lineageTag: 809a55cb-9bfa-427a-bf45-7647ea163c27
+		summarizeBy: none
+		sourceColumn: nivel
+
+	column chefia
+		dataType: string
+		lineageTag: be3779c0-037e-4f03-9228-0cfde54e2c50
+		summarizeBy: none
+		sourceColumn: chefia
+
+	column tipo_contrato
+		dataType: string
+		lineageTag: 8a248700-551d-4ef0-ad71-c68bbc3f07fc
+		summarizeBy: none
+		sourceColumn: tipo_contrato
+
+	column data_admissao
+		dataType: dateTime
+		formatString: dd/MM/yyyy
+		lineageTag: cb0aba20-06f6-421b-b2b0-6a0d5560ba78
+		summarizeBy: none
+		sourceColumn: data_admissao
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column data_saida
+		dataType: dateTime
+		formatString: dd/MM/yyyy
+		lineageTag: b5713a76-91fb-4e78-ad49-ec5ab25e5d20
+		summarizeBy: none
+		sourceColumn: data_saida
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column motivo_saida
+		dataType: string
+		lineageTag: 9e4aeffe-b0d5-45c8-8508-1b4e50e06378
+		summarizeBy: none
+		sourceColumn: motivo_saida
+
+	partition colaboradores = m
+		mode: import
+		source =
+				let
+				  Origem = PostgreSQL.Database(Servidor, BaseDados),
+				  Vista = Origem{[Schema = "rh", Item = "vw_colaboradores"]}[Data],
+				  Tipos = Table.TransformColumnTypes(Vista, {{"id", Int64.Type}, {"data_nascimento", type date}, {"data_admissao", type date}, {"data_saida", type date}})
+				in
+				  Tipos
+

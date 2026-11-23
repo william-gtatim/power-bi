@@ -1,0 +1,59 @@
+{
+  "report": "../../rh/rh.Report",
+  "page": "Colaboradores",
+  "title": "Colaboradores",
+  "table": "colaboradores",
+  "columns": [
+    { "field": "id", "label": "ID", "filter": "painel" },
+    { "field": "nome", "label": "Nome", "search": true },
+    { "field": "sobrenome", "label": "Sobrenome", "search": true },
+    { "field": "sexo", "label": "Sexo", "filter": "painel", "table": false },
+    { "field": "data_nascimento", "label": "Data de nascimento", "filter": "painel", "table": false },
+    { "field": "departamento", "label": "Departamento", "search": false, "table": false },
+    { "field": "direcao", "label": "Direção", "filter": "painel", "table": false },
+    { "field": "cargo", "label": "Cargo", "search": true },
+    { "field": "nivel", "label": "Nível", "search": false, "table": false },
+    { "field": "chefia", "label": "Chefia", "search": true },
+    { "field": "distrito", "label": "Distrito", "search": false },
+    { "field": "tipo_contrato", "label": "Tipo de contrato", "search": false },
+    { "field": "data_admissao", "label": "Data de admissão", "filter": "painel" },
+    { "field": "data_saida", "label": "Data de saída", "filter": "painel" },
+    { "field": "motivo_saida", "label": "Motivo de saída", "search": false }
+  ],
+  "detalhe": {
+    "page": "Detalhe do colaborador",
+    "drillthrough": "id",
+    "sections": [
+      {
+        "title": "Identificação",
+        "fields": [
+          { "field": "id", "label": "ID" },
+          { "field": "nome", "label": "Nome" },
+          { "field": "sobrenome", "label": "Sobrenome" },
+          { "field": "sexo", "label": "Sexo" },
+          { "field": "data_nascimento", "label": "Data de nascimento" },
+          { "field": "distrito", "label": "Distrito" }
+        ]
+      },
+      {
+        "title": "Função",
+        "fields": [
+          { "field": "departamento", "label": "Departamento" },
+          { "field": "direcao", "label": "Direção" },
+          { "field": "cargo", "label": "Cargo" },
+          { "field": "nivel", "label": "Nível" },
+          { "field": "chefia", "label": "Chefia" }
+        ]
+      },
+      {
+        "title": "Contrato",
+        "fields": [
+          { "field": "tipo_contrato", "label": "Tipo de contrato" },
+          { "field": "data_admissao", "label": "Data de admissão" },
+          { "field": "data_saida", "label": "Data de saída" },
+          { "field": "motivo_saida", "label": "Motivo de saída" }
+        ]
+      }
+    ]
+  }
+}

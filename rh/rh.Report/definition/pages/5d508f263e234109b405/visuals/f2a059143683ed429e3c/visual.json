@@ -1,0 +1,252 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.9.0/schema.json",
+  "name": "f2a059143683ed429e3c",
+  "position": {
+    "x": 288,
+    "y": 88,
+    "z": 2000,
+    "height": 968,
+    "width": 1608,
+    "tabOrder": 12
+  },
+  "visual": {
+    "visualType": "tableEx",
+    "query": {
+      "queryState": {
+        "Values": {
+          "projections": [
+            {
+              "displayName": "ID",
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "colaboradores"
+                    }
+                  },
+                  "Property": "id"
+                }
+              },
+              "queryRef": "colaboradores.id",
+              "nativeQueryRef": "id"
+            },
+            {
+              "displayName": "Nome",
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "colaboradores"
+                    }
+                  },
+                  "Property": "nome"
+                }
+              },
+              "queryRef": "colaboradores.nome",
+              "nativeQueryRef": "nome"
+            },
+            {
+              "displayName": "Sobrenome",
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "colaboradores"
+                    }
+                  },
+                  "Property": "sobrenome"
+                }
+              },
+              "queryRef": "colaboradores.sobrenome",
+              "nativeQueryRef": "sobrenome"
+            },
+            {
+              "displayName": "Cargo",
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "colaboradores"
+                    }
+                  },
+                  "Property": "cargo"
+                }
+              },
+              "queryRef": "colaboradores.cargo",
+              "nativeQueryRef": "cargo"
+            },
+            {
+              "displayName": "Chefia",
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "colaboradores"
+                    }
+                  },
+                  "Property": "chefia"
+                }
+              },
+              "queryRef": "colaboradores.chefia",
+              "nativeQueryRef": "chefia"
+            },
+            {
+              "displayName": "Distrito",
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "colaboradores"
+                    }
+                  },
+                  "Property": "distrito"
+                }
+              },
+              "queryRef": "colaboradores.distrito",
+              "nativeQueryRef": "distrito"
+            },
+            {
+              "displayName": "Tipo de contrato",
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "colaboradores"
+                    }
+                  },
+                  "Property": "tipo_contrato"
+                }
+              },
+              "queryRef": "colaboradores.tipo_contrato",
+              "nativeQueryRef": "tipo_contrato"
+            },
+            {
+              "displayName": "Data de admissão",
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "colaboradores"
+                    }
+                  },
+                  "Property": "data_admissao"
+                }
+              },
+              "queryRef": "colaboradores.data_admissao",
+              "nativeQueryRef": "data_admissao"
+            },
+            {
+              "displayName": "Data de saída",
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "colaboradores"
+                    }
+                  },
+                  "Property": "data_saida"
+                }
+              },
+              "queryRef": "colaboradores.data_saida",
+              "nativeQueryRef": "data_saida"
+            },
+            {
+              "displayName": "Motivo de saída",
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "colaboradores"
+                    }
+                  },
+                  "Property": "motivo_saida"
+                }
+              },
+              "queryRef": "colaboradores.motivo_saida",
+              "nativeQueryRef": "motivo_saida"
+            }
+          ]
+        }
+      }
+    },
+    "objects": {
+      "total": [
+        {
+          "properties": {
+            "totals": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "grid": [
+        {
+          "properties": {
+            "outlineColor": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#117865'"
+                    }
+                  }
+                }
+              }
+            },
+            "outlineWeight": {
+              "expr": {
+                "Literal": {
+                  "Value": "2D"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "columnHeaders": [
+        {
+          "properties": {
+            "columnAdjustment": {
+              "expr": {
+                "Literal": {
+                  "Value": "'growToFit'"
+                }
+              }
+            },
+            "autoSizeColumnWidth": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "fontSize": {
+              "expr": {
+                "Literal": {
+                  "Value": "14D"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "values": [
+        {
+          "properties": {
+            "fontSize": {
+              "expr": {
+                "Literal": {
+                  "Value": "14D"
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,8 @@
+{
+  "name": "power-bi-projetos",
+  "private": true,
+  "description": "Ferramentas auxiliares (geração de dados e páginas PBIR)",
+  "dependencies": {
+    "pg": "^8.23.1"
+  }
+}
