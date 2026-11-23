@@ -105,6 +105,13 @@ table colaboradores
 		summarizeBy: none
 		sourceColumn: motivo_saida
 
+	/// Nome completo com o ID entre parênteses (único; há homónimos).
+	column colaborador
+		dataType: string
+		lineageTag: 7a19daad-cbbb-4cc3-b606-c3a5a2e0df84
+		summarizeBy: none
+		sourceColumn: colaborador
+
 	partition colaboradores = m
 		mode: import
 		source =

@@ -1,0 +1,8 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/page/2.1.0/schema.json",
+  "name": "84fc067e4ed53b4eeabb",
+  "displayName": "Ausências por colaborador",
+  "displayOption": "FitToPage",
+  "height": 1080,
+  "width": 1920
+}

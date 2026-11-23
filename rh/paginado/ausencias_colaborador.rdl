@@ -1,0 +1,689 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Report MustUnderstand="df"
+  xmlns="http://schemas.microsoft.com/sqlserver/reporting/2016/01/reportdefinition"
+  xmlns:rd="http://schemas.microsoft.com/SQLServer/reporting/reportdesigner"
+  xmlns:df="http://schemas.microsoft.com/sqlserver/reporting/2016/01/reportdefinition/defaultfontfamily">
+  <rd:ReportUnitType>Cm</rd:ReportUnitType>
+  <rd:ReportID>9327dbe9-0536-4782-8eb1-7ebf445e6ba1</rd:ReportID>
+  <df:DefaultFontFamily>Segoe UI</df:DefaultFontFamily>
+  <Description>Ausências por colaborador num mês (uma página por colaborador). Gerado por rh/paginado/gerar_rdl_ausencias.js.</Description>
+  <AutoRefresh>0</AutoRefresh>
+  <DataSources>
+    <DataSource Name="Neon">
+      <ConnectionProperties>
+        <DataProvider>ODBC</DataProvider>
+        <ConnectString>Driver={PostgreSQL Unicode(x64)};Server=ep-blue-pond-beysn29j-pooler.c-9.us-east-2.aws.neon.tech;Port=5432;Database=neondb;SSLmode=require</ConnectString>
+        <Prompt>Utilizador e password do PostgreSQL (Neon):</Prompt>
+      </ConnectionProperties>
+      <rd:SecurityType>DataBase</rd:SecurityType>
+      <rd:DataSourceID>bd782221-4039-4f28-a879-a67d0aab4011</rd:DataSourceID>
+    </DataSource>
+  </DataSources>
+  <DataSets>
+    <DataSet Name="dsMeses">
+      <Query>
+        <DataSourceName>Neon</DataSourceName>
+        <CommandText>SELECT DISTINCT c.ano_mes, c.nome_mes || ' de ' || c.ano AS rotulo
+FROM rh.calendario c
+WHERE EXISTS (SELECT 1 FROM rh.ausencias a WHERE to_char(a.data_inicio, 'YYYY-MM') = c.ano_mes)
+ORDER BY c.ano_mes DESC</CommandText>
+      </Query>
+      <Fields>
+        <Field Name="ano_mes">
+          <DataField>ano_mes</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="rotulo">
+          <DataField>rotulo</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+      </Fields>
+    </DataSet>
+    <DataSet Name="dsColaboradores">
+      <Query>
+        <DataSourceName>Neon</DataSourceName>
+        <CommandText>="SELECT DISTINCT c.id, c.colaborador FROM rh.vw_colaboradores c JOIN rh.ausencias a ON a.colaborador_id = c.id WHERE to_char(a.data_inicio, 'YYYY-MM') = '" &amp; Replace(Parameters!Mes.Value, "'", "''") &amp; "' ORDER BY c.colaborador"</CommandText>
+      </Query>
+      <Fields>
+        <Field Name="id">
+          <DataField>id</DataField>
+          <rd:TypeName>System.Int32</rd:TypeName>
+        </Field>
+        <Field Name="colaborador">
+          <DataField>colaborador</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+      </Fields>
+    </DataSet>
+    <DataSet Name="dsColaboradoresPadrao">
+      <Query>
+        <DataSourceName>Neon</DataSourceName>
+        <CommandText>="SELECT c.id FROM rh.vw_colaboradores c JOIN rh.ausencias a ON a.colaborador_id = c.id WHERE to_char(a.data_inicio, 'YYYY-MM') = '" &amp; Replace(Parameters!Mes.Value, "'", "''") &amp; "' GROUP BY c.id, c.colaborador ORDER BY count(*) DESC, c.colaborador LIMIT 3"</CommandText>
+      </Query>
+      <Fields>
+        <Field Name="id">
+          <DataField>id</DataField>
+          <rd:TypeName>System.Int32</rd:TypeName>
+        </Field>
+      </Fields>
+    </DataSet>
+    <DataSet Name="Ausencias">
+      <Query>
+        <DataSourceName>Neon</DataSourceName>
+        <CommandText>="SELECT c.id AS colaborador_id, c.colaborador, c.departamento, c.cargo, a.tipo, a.data_inicio, a.data_fim, a.dias_uteis FROM rh.ausencias a JOIN rh.vw_colaboradores c ON c.id = a.colaborador_id WHERE to_char(a.data_inicio, 'YYYY-MM') = '" &amp; Replace(Parameters!Mes.Value, "'", "''") &amp; "' AND c.id IN (" &amp; Join(Parameters!Colaboradores.Value, ",") &amp; ") ORDER BY c.colaborador, a.tipo, a.data_inicio"</CommandText>
+      </Query>
+      <Fields>
+        <Field Name="colaborador_id">
+          <DataField>colaborador_id</DataField>
+          <rd:TypeName>System.Int32</rd:TypeName>
+        </Field>
+        <Field Name="colaborador">
+          <DataField>colaborador</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="departamento">
+          <DataField>departamento</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="cargo">
+          <DataField>cargo</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="tipo">
+          <DataField>tipo</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="data_inicio">
+          <DataField>data_inicio</DataField>
+          <rd:TypeName>System.DateTime</rd:TypeName>
+        </Field>
+        <Field Name="data_fim">
+          <DataField>data_fim</DataField>
+          <rd:TypeName>System.DateTime</rd:TypeName>
+        </Field>
+        <Field Name="dias_uteis">
+          <DataField>dias_uteis</DataField>
+          <rd:TypeName>System.Int32</rd:TypeName>
+        </Field>
+      </Fields>
+    </DataSet>
+  </DataSets>
+  <ReportSections>
+    <ReportSection>
+      <Body>
+        <ReportItems>
+          <Tablix Name="AusenciasPorColaborador">
+            <TablixBody>
+              <TablixColumns>
+                <TablixColumn><Width>8cm</Width></TablixColumn>
+                <TablixColumn><Width>3.5cm</Width></TablixColumn>
+                <TablixColumn><Width>3.5cm</Width></TablixColumn>
+                <TablixColumn><Width>3cm</Width></TablixColumn>
+              </TablixColumns>
+              <TablixRows>
+                <TablixRow>
+                  <Height>0.9cm</Height>
+                  <TablixCells>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="Colaborador">
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>=Fields!colaborador.Value</Value>
+                                  <Style><FontSize>16pt</FontSize><Color>#117865</Color><FontWeight>Bold</FontWeight></Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style></Style>
+                            </Paragraph>
+                          </Paragraphs>
+                          <Style>
+                            <Border><Style>None</Style></Border>
+                            <PaddingLeft>4pt</PaddingLeft><PaddingRight>4pt</PaddingRight>
+                            <PaddingTop>6pt</PaddingTop><PaddingBottom>3pt</PaddingBottom>
+                          </Style>
+                        </Textbox>
+                        <ColSpan>4</ColSpan>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell />
+                    <TablixCell />
+                    <TablixCell />
+                  </TablixCells>
+                </TablixRow>
+                <TablixRow>
+                  <Height>0.7cm</Height>
+                  <TablixCells>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="DeptCargo">
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>=Fields!departamento.Value &amp; "  ·  " &amp; Fields!cargo.Value</Value>
+                                  <Style><FontSize>10pt</FontSize><Color>#605e5c</Color></Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style></Style>
+                            </Paragraph>
+                          </Paragraphs>
+                          <Style>
+                            <Border><Style>None</Style></Border>
+                            <PaddingLeft>4pt</PaddingLeft><PaddingRight>4pt</PaddingRight>
+                            <PaddingTop>3pt</PaddingTop><PaddingBottom>3pt</PaddingBottom>
+                          </Style>
+                        </Textbox>
+                        <ColSpan>4</ColSpan>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell />
+                    <TablixCell />
+                    <TablixCell />
+                  </TablixCells>
+                </TablixRow>
+                <TablixRow>
+                  <Height>0.7cm</Height>
+                  <TablixCells>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="HdrTipo">
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>Tipo</Value>
+                                  <Style><FontSize>10pt</FontSize><Color>#FFFFFF</Color><FontWeight>Bold</FontWeight></Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style></Style>
+                            </Paragraph>
+                          </Paragraphs>
+                          <Style>
+                            <Border><Style>None</Style></Border>
+                            <BackgroundColor>#117865</BackgroundColor>
+                            <PaddingLeft>4pt</PaddingLeft><PaddingRight>4pt</PaddingRight>
+                            <PaddingTop>3pt</PaddingTop><PaddingBottom>3pt</PaddingBottom>
+                          </Style>
+                        </Textbox>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="HdrInicio">
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>Início</Value>
+                                  <Style><FontSize>10pt</FontSize><Color>#FFFFFF</Color><FontWeight>Bold</FontWeight></Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style></Style>
+                            </Paragraph>
+                          </Paragraphs>
+                          <Style>
+                            <Border><Style>None</Style></Border>
+                            <BackgroundColor>#117865</BackgroundColor>
+                            <PaddingLeft>4pt</PaddingLeft><PaddingRight>4pt</PaddingRight>
+                            <PaddingTop>3pt</PaddingTop><PaddingBottom>3pt</PaddingBottom>
+                          </Style>
+                        </Textbox>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="HdrFim">
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>Fim</Value>
+                                  <Style><FontSize>10pt</FontSize><Color>#FFFFFF</Color><FontWeight>Bold</FontWeight></Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style></Style>
+                            </Paragraph>
+                          </Paragraphs>
+                          <Style>
+                            <Border><Style>None</Style></Border>
+                            <BackgroundColor>#117865</BackgroundColor>
+                            <PaddingLeft>4pt</PaddingLeft><PaddingRight>4pt</PaddingRight>
+                            <PaddingTop>3pt</PaddingTop><PaddingBottom>3pt</PaddingBottom>
+                          </Style>
+                        </Textbox>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="HdrDias">
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>Dias úteis</Value>
+                                  <Style><FontSize>10pt</FontSize><Color>#FFFFFF</Color><FontWeight>Bold</FontWeight></Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style><TextAlign>Right</TextAlign></Style>
+                            </Paragraph>
+                          </Paragraphs>
+                          <Style>
+                            <Border><Style>None</Style></Border>
+                            <BackgroundColor>#117865</BackgroundColor>
+                            <PaddingLeft>4pt</PaddingLeft><PaddingRight>4pt</PaddingRight>
+                            <PaddingTop>3pt</PaddingTop><PaddingBottom>3pt</PaddingBottom>
+                          </Style>
+                        </Textbox>
+                      </CellContents>
+                    </TablixCell>
+                  </TablixCells>
+                </TablixRow>
+                <TablixRow>
+                  <Height>0.6cm</Height>
+                  <TablixCells>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="Tipo">
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>=Fields!tipo.Value</Value>
+                                  <Style><FontSize>10pt</FontSize><Color>#252423</Color></Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style></Style>
+                            </Paragraph>
+                          </Paragraphs>
+                          <Style>
+                            <Border><Style>None</Style></Border>
+                            <BottomBorder><Color>#e0e0e0</Color><Style>Solid</Style><Width>1pt</Width></BottomBorder>
+                            <PaddingLeft>4pt</PaddingLeft><PaddingRight>4pt</PaddingRight>
+                            <PaddingTop>3pt</PaddingTop><PaddingBottom>3pt</PaddingBottom>
+                          </Style>
+                        </Textbox>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="Inicio">
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>=Fields!data_inicio.Value</Value>
+                                  <Style><FontSize>10pt</FontSize><Color>#252423</Color><Format>dd/MM/yyyy</Format></Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style></Style>
+                            </Paragraph>
+                          </Paragraphs>
+                          <Style>
+                            <Border><Style>None</Style></Border>
+                            <BottomBorder><Color>#e0e0e0</Color><Style>Solid</Style><Width>1pt</Width></BottomBorder>
+                            <PaddingLeft>4pt</PaddingLeft><PaddingRight>4pt</PaddingRight>
+                            <PaddingTop>3pt</PaddingTop><PaddingBottom>3pt</PaddingBottom>
+                          </Style>
+                        </Textbox>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="Fim">
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>=Fields!data_fim.Value</Value>
+                                  <Style><FontSize>10pt</FontSize><Color>#252423</Color><Format>dd/MM/yyyy</Format></Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style></Style>
+                            </Paragraph>
+                          </Paragraphs>
+                          <Style>
+                            <Border><Style>None</Style></Border>
+                            <BottomBorder><Color>#e0e0e0</Color><Style>Solid</Style><Width>1pt</Width></BottomBorder>
+                            <PaddingLeft>4pt</PaddingLeft><PaddingRight>4pt</PaddingRight>
+                            <PaddingTop>3pt</PaddingTop><PaddingBottom>3pt</PaddingBottom>
+                          </Style>
+                        </Textbox>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="Dias">
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>=Fields!dias_uteis.Value</Value>
+                                  <Style><FontSize>10pt</FontSize><Color>#252423</Color><Format>#,0</Format></Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style><TextAlign>Right</TextAlign></Style>
+                            </Paragraph>
+                          </Paragraphs>
+                          <Style>
+                            <Border><Style>None</Style></Border>
+                            <BottomBorder><Color>#e0e0e0</Color><Style>Solid</Style><Width>1pt</Width></BottomBorder>
+                            <PaddingLeft>4pt</PaddingLeft><PaddingRight>4pt</PaddingRight>
+                            <PaddingTop>3pt</PaddingTop><PaddingBottom>3pt</PaddingBottom>
+                          </Style>
+                        </Textbox>
+                      </CellContents>
+                    </TablixCell>
+                  </TablixCells>
+                </TablixRow>
+                <TablixRow>
+                  <Height>0.6cm</Height>
+                  <TablixCells>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="SubTipo">
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>="Subtotal " &amp; Fields!tipo.Value</Value>
+                                  <Style><FontSize>10pt</FontSize><Color>#605e5c</Color><FontWeight>Bold</FontWeight></Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style></Style>
+                            </Paragraph>
+                          </Paragraphs>
+                          <Style>
+                            <Border><Style>None</Style></Border>
+                            <BottomBorder><Color>#e0e0e0</Color><Style>Solid</Style><Width>1pt</Width></BottomBorder>
+                            <PaddingLeft>4pt</PaddingLeft><PaddingRight>4pt</PaddingRight>
+                            <PaddingTop>3pt</PaddingTop><PaddingBottom>3pt</PaddingBottom>
+                          </Style>
+                        </Textbox>
+                        <ColSpan>3</ColSpan>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell />
+                    <TablixCell />
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="SubDias">
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>=Sum(Fields!dias_uteis.Value)</Value>
+                                  <Style><FontSize>10pt</FontSize><Color>#605e5c</Color><FontWeight>Bold</FontWeight><Format>#,0</Format></Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style><TextAlign>Right</TextAlign></Style>
+                            </Paragraph>
+                          </Paragraphs>
+                          <Style>
+                            <Border><Style>None</Style></Border>
+                            <BottomBorder><Color>#e0e0e0</Color><Style>Solid</Style><Width>1pt</Width></BottomBorder>
+                            <PaddingLeft>4pt</PaddingLeft><PaddingRight>4pt</PaddingRight>
+                            <PaddingTop>3pt</PaddingTop><PaddingBottom>3pt</PaddingBottom>
+                          </Style>
+                        </Textbox>
+                      </CellContents>
+                    </TablixCell>
+                  </TablixCells>
+                </TablixRow>
+                <TablixRow>
+                  <Height>0.8cm</Height>
+                  <TablixCells>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="TotColab">
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>Total do colaborador</Value>
+                                  <Style><FontSize>11pt</FontSize><Color>#117865</Color><FontWeight>Bold</FontWeight></Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style></Style>
+                            </Paragraph>
+                          </Paragraphs>
+                          <Style>
+                            <Border><Style>None</Style></Border>
+                            <PaddingLeft>4pt</PaddingLeft><PaddingRight>4pt</PaddingRight>
+                            <PaddingTop>6pt</PaddingTop><PaddingBottom>3pt</PaddingBottom>
+                          </Style>
+                        </Textbox>
+                        <ColSpan>3</ColSpan>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell />
+                    <TablixCell />
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="TotDias">
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>=Sum(Fields!dias_uteis.Value)</Value>
+                                  <Style><FontSize>11pt</FontSize><Color>#117865</Color><FontWeight>Bold</FontWeight><Format>#,0</Format></Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style><TextAlign>Right</TextAlign></Style>
+                            </Paragraph>
+                          </Paragraphs>
+                          <Style>
+                            <Border><Style>None</Style></Border>
+                            <PaddingLeft>4pt</PaddingLeft><PaddingRight>4pt</PaddingRight>
+                            <PaddingTop>6pt</PaddingTop><PaddingBottom>3pt</PaddingBottom>
+                          </Style>
+                        </Textbox>
+                      </CellContents>
+                    </TablixCell>
+                  </TablixCells>
+                </TablixRow>
+              </TablixRows>
+            </TablixBody>
+            <TablixColumnHierarchy>
+              <TablixMembers>
+                <TablixMember />
+                <TablixMember />
+                <TablixMember />
+                <TablixMember />
+              </TablixMembers>
+            </TablixColumnHierarchy>
+            <TablixRowHierarchy>
+              <TablixMembers>
+                <TablixMember>
+                  <Group Name="PorColaborador">
+                    <GroupExpressions><GroupExpression>=Fields!colaborador_id.Value</GroupExpression></GroupExpressions>
+                    <PageBreak><BreakLocation>Between</BreakLocation></PageBreak>
+                  </Group>
+                  <SortExpressions><SortExpression><Value>=Fields!colaborador.Value</Value></SortExpression></SortExpressions>
+                  <TablixMembers>
+                    <TablixMember><KeepWithGroup>After</KeepWithGroup></TablixMember>
+                    <TablixMember><KeepWithGroup>After</KeepWithGroup></TablixMember>
+                    <TablixMember><KeepWithGroup>After</KeepWithGroup></TablixMember>
+                    <TablixMember>
+                      <Group Name="PorTipo">
+                        <GroupExpressions><GroupExpression>=Fields!tipo.Value</GroupExpression></GroupExpressions>
+                      </Group>
+                      <SortExpressions><SortExpression><Value>=Fields!tipo.Value</Value></SortExpression></SortExpressions>
+                      <TablixMembers>
+                        <TablixMember>
+                          <Group Name="Detalhe" />
+                          <SortExpressions><SortExpression><Value>=Fields!data_inicio.Value</Value></SortExpression></SortExpressions>
+                        </TablixMember>
+                        <TablixMember><KeepWithGroup>Before</KeepWithGroup></TablixMember>
+                      </TablixMembers>
+                    </TablixMember>
+                    <TablixMember><KeepWithGroup>Before</KeepWithGroup></TablixMember>
+                  </TablixMembers>
+                </TablixMember>
+              </TablixMembers>
+            </TablixRowHierarchy>
+            <NoRowsMessage>Sem ausências para os colaboradores e o mês escolhidos.</NoRowsMessage>
+            <DataSetName>Ausencias</DataSetName>
+            <Top>0cm</Top>
+            <Left>0cm</Left>
+            <Height>4.3cm</Height>
+            <Width>18cm</Width>
+            <Style><Border><Style>None</Style></Border></Style>
+          </Tablix>
+        </ReportItems>
+        <Height>4.3cm</Height>
+        <Style />
+      </Body>
+      <Width>18cm</Width>
+      <Page>
+        <PageHeader>
+          <Height>1.6cm</Height>
+          <PrintOnFirstPage>true</PrintOnFirstPage>
+          <PrintOnLastPage>true</PrintOnLastPage>
+          <ReportItems>
+            <Textbox Name="Titulo">
+              <CanGrow>true</CanGrow>
+              <KeepTogether>true</KeepTogether>
+              <Paragraphs>
+                <Paragraph>
+                  <TextRuns>
+                    <TextRun><Value>Relatório de ausências</Value><Style><FontSize>18pt</FontSize><Color>#252423</Color></Style></TextRun>
+                  </TextRuns>
+                  <Style></Style>
+                </Paragraph>
+              </Paragraphs>
+              <Top>0cm</Top><Left>0cm</Left><Height>0.8cm</Height><Width>18cm</Width>
+              <Style><Border><Style>None</Style></Border><PaddingLeft>2pt</PaddingLeft><PaddingRight>2pt</PaddingRight></Style>
+            </Textbox>
+            <Textbox Name="Periodo">
+              <CanGrow>true</CanGrow>
+              <KeepTogether>true</KeepTogether>
+              <Paragraphs>
+                <Paragraph>
+                  <TextRuns>
+                    <TextRun><Value>="Mês: " &amp; Parameters!Mes.Label</Value><Style><FontSize>10pt</FontSize><Color>#605e5c</Color></Style></TextRun>
+                  </TextRuns>
+                  <Style></Style>
+                </Paragraph>
+              </Paragraphs>
+              <Top>0.85cm</Top><Left>0cm</Left><Height>0.5cm</Height><Width>18cm</Width>
+              <Style><Border><Style>None</Style></Border><PaddingLeft>2pt</PaddingLeft><PaddingRight>2pt</PaddingRight></Style>
+            </Textbox>
+            <Line Name="LinhaTitulo">
+              <Top>1.45cm</Top><Left>0cm</Left><Height>0cm</Height><Width>1.5cm</Width>
+              <Style><Border><Color>#117865</Color><Style>Solid</Style><Width>3pt</Width></Border></Style>
+            </Line>
+          </ReportItems>
+          <Style><Border><Style>None</Style></Border></Style>
+        </PageHeader>
+        <PageFooter>
+          <Height>0.7cm</Height>
+          <PrintOnFirstPage>true</PrintOnFirstPage>
+          <PrintOnLastPage>true</PrintOnLastPage>
+          <ReportItems>
+            <Textbox Name="Rodape">
+              <CanGrow>true</CanGrow>
+              <KeepTogether>true</KeepTogether>
+              <Paragraphs>
+                <Paragraph>
+                  <TextRuns>
+                    <TextRun><Value>="Gerado em " &amp; Format(Globals!ExecutionTime, "dd/MM/yyyy HH:mm") &amp; "   ·   Página " &amp; Globals!PageNumber &amp; " de " &amp; Globals!TotalPages</Value><Style><FontSize>8pt</FontSize><Color>#605e5c</Color></Style></TextRun>
+                  </TextRuns>
+                  <Style><TextAlign>Right</TextAlign></Style>
+                </Paragraph>
+              </Paragraphs>
+              <Top>0.1cm</Top><Left>0cm</Left><Height>0.5cm</Height><Width>18cm</Width>
+              <Style><Border><Style>None</Style></Border><PaddingLeft>2pt</PaddingLeft><PaddingRight>2pt</PaddingRight></Style>
+            </Textbox>
+          </ReportItems>
+          <Style><Border><Style>None</Style></Border></Style>
+        </PageFooter>
+        <PageHeight>29.7cm</PageHeight>
+        <PageWidth>21cm</PageWidth>
+        <InteractiveHeight>29.7cm</InteractiveHeight>
+        <InteractiveWidth>21cm</InteractiveWidth>
+        <LeftMargin>1.5cm</LeftMargin>
+        <RightMargin>1.5cm</RightMargin>
+        <TopMargin>1.5cm</TopMargin>
+        <BottomMargin>1.5cm</BottomMargin>
+        <Style />
+      </Page>
+    </ReportSection>
+  </ReportSections>
+  <ReportParameters>
+    <ReportParameter Name="Mes">
+      <DataType>String</DataType>
+      <DefaultValue>
+        <DataSetReference>
+          <DataSetName>dsMeses</DataSetName>
+          <ValueField>ano_mes</ValueField>
+        </DataSetReference>
+      </DefaultValue>
+      <Prompt>Mês</Prompt>
+      <ValidValues>
+        <DataSetReference>
+          <DataSetName>dsMeses</DataSetName>
+          <ValueField>ano_mes</ValueField>
+          <LabelField>rotulo</LabelField>
+        </DataSetReference>
+      </ValidValues>
+    </ReportParameter>
+    <ReportParameter Name="Colaboradores">
+      <DataType>Integer</DataType>
+      <DefaultValue>
+        <DataSetReference>
+          <DataSetName>dsColaboradoresPadrao</DataSetName>
+          <ValueField>id</ValueField>
+        </DataSetReference>
+      </DefaultValue>
+      <Prompt>Colaboradores</Prompt>
+      <ValidValues>
+        <DataSetReference>
+          <DataSetName>dsColaboradores</DataSetName>
+          <ValueField>id</ValueField>
+          <LabelField>colaborador</LabelField>
+        </DataSetReference>
+      </ValidValues>
+      <MultiValue>true</MultiValue>
+    </ReportParameter>
+  </ReportParameters>
+  <ReportParametersLayout>
+    <GridLayoutDefinition>
+      <NumberOfColumns>2</NumberOfColumns>
+      <NumberOfRows>1</NumberOfRows>
+      <CellDefinitions>
+        <CellDefinition><ColumnIndex>0</ColumnIndex><RowIndex>0</RowIndex><ParameterName>Mes</ParameterName></CellDefinition>
+        <CellDefinition><ColumnIndex>1</ColumnIndex><RowIndex>0</RowIndex><ParameterName>Colaboradores</ParameterName></CellDefinition>
+      </CellDefinitions>
+    </GridLayoutDefinition>
+  </ReportParametersLayout>
+</Report>

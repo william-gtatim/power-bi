@@ -1,5 +1,5 @@
 {
-  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.9.0/schema.json",
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
   "name": "68028756ef7f9f7a2966",
   "position": {
     "x": 24,
@@ -27,7 +27,8 @@
                 }
               },
               "queryRef": "colaboradores.motivo_saida",
-              "nativeQueryRef": "motivo_saida"
+              "nativeQueryRef": "motivo_saida",
+              "active": true
             }
           ]
         }

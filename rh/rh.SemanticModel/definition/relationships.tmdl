@@ -1,0 +1,8 @@
+relationship ausencias_colaborador_id_colaboradores_id
+	fromColumn: ausencias.colaborador_id
+	toColumn: colaboradores.id
+
+relationship ausencias_data_inicio_calendario_data
+	fromColumn: ausencias.data_inicio
+	toColumn: calendario.data
+

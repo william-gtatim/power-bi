@@ -8,11 +8,13 @@ model Model
 
 annotation __PBI_TimeIntelligenceEnabled = 0
 
-annotation PBI_QueryOrder = ["Servidor","BaseDados","colaboradores"]
+annotation PBI_QueryOrder = ["Servidor","BaseDados","colaboradores","calendario","ausencias"]
 
 annotation PBI_ProTooling = ["DevMode"]
 
 ref table colaboradores
+ref table calendario
+ref table ausencias
 
 ref cultureInfo pt-BR
 

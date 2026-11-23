@@ -75,11 +75,11 @@ Os geradores são [gerar_pagina.js](gerar_pagina.js) (listagem) e [gerar_detalhe
    - Faz `--status` e depois `--reload` no Desktop. Se o relatório não estiver aberto, faz open/attach, sem `--reload`. Corre o status e a abertura/recarregamento **em comandos separados** e, se o status indicar `hasUnsavedChanges: true`, pára (ver passo 4).
    - **Abrir o Desktop neste computador:** o Power BI Desktop está instalado pela Microsoft Store, e a CLI não o encontra sozinha (dá `HOST_UNAVAILABLE` com "executable was not found"). Descobre a pasta e define `PBI_DESKTOP_PATH` **no mesmo comando** da abertura:
      ```bash
-     L=$(powershell -NoProfile -Command "Get-AppxPackage *PowerBI* | Select-Object -ExpandProperty InstallLocation" | tr -d '\r') && \
+     L=$(powershell -NoProfile -Command "Get-AppxPackage Microsoft.MicrosoftPowerBIDesktop | Select-Object -ExpandProperty InstallLocation" | tr -d '\r') && \
        export PBI_DESKTOP_PATH="$L\\bin\\PBIDesktop.exe" && \
        powerbi-report-author preview <pasta>/<Nome>.Report --host desktop
      ```
-     A versão da pasta muda quando a Store atualiza o Power BI, por isso consulta-a sempre.
+     A versão da pasta muda quando a Store atualiza o Power BI, por isso consulta-a sempre. Usa o nome exato do pacote: `*PowerBI*` também apanha o Power BI Report Builder e o caminho fica errado.
    - **Fechar o Desktop sem gravar** (só com autorização): `taskkill //F //IM PBIDesktop.exe`.
    - **Dados vazios depois de abrir** (aviso "Algumas das tabelas estão incompletas ou não têm dados"): o modelo abriu sem cache. Pede ao utilizador para clicar em **Atualizar agora**. Se a origem for PostgreSQL ou outra base com autenticação, ele tem de introduzir as credenciais no Desktop; nunca as escrevas no modelo.
    - Tira as capturas com `--screenshot <pasta> --all-pages` para a pasta temporária de validação que a skill indica, revê as imagens e apaga essa pasta no fim.
@@ -122,6 +122,11 @@ Notas:
 - `wordWrap` nos cabeçalhos da tabela não reduz a largura com `growToFit`. Para tirar o scroll horizontal, retiram-se colunas.
 - O cartão (`cardVisual`) abrevia por defeito ("2 Mil"). Usa `labelDisplayUnits: 1D` para mostrar o número completo.
 - Textos e datas em cartões usam `Aggregation` com `Function: 3` (Min). A contagem usa `Function: 5` (CountNonNull).
+- **Matriz (`pivotTable`) expandida em todos os níveis:** cada projeção em `Rows` leva `"active": true`, e `expansionStates` tem uma entrada por nível com `isPinned: true` (só o 1.º com `identityKeys`) e `root: {}`. `isCollapsed: false` **não** expande. Este formato foi confirmado lendo o que o Desktop grava com "Expandir → Tudo" (ver `scripts/gerar_ausencias.js`). Quando não souberes o formato, pede ao utilizador para fazer a ação no Desktop e gravar, e lê o ficheiro.
+- **Valores que só devem aparecer nas linhas de detalhe** de uma matriz (vazios nos subtotais): usa `IF ( ISINSCOPE ( t[coluna_folha] ), ... )`. `HASONEVALUE` falha quando o grupo tem um só registo.
+- **Atualizar dados sem o utilizador:** com o Desktop aberto, `partition_operations` → `RefreshWithXMLA` pelo MCP funciona com as credenciais que o Desktop já guardou. Depois de atualizar só algumas tabelas, corre `model_operations` → `RefreshWithXMLA` com `Calculate`.
+- **Coluna nova num modelo com cache:** a cache (`cache.abf`) é de antes da coluna existir, por isso ela aparece vazia até se atualizar essa tabela.
+- **Editar o TMDL com o Desktop aberto** mostra o aviso "Os arquivos deste projeto foram alterados externamente". Se a mesma alteração também foi feita no Desktop pelo MCP, o aviso pode ser ignorado.
 
 ## Alterar o padrão
 

@@ -1,5 +1,5 @@
 {
-  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.9.0/schema.json",
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
   "name": "41c573fff2f94d5afebc",
   "position": {
     "x": 24,
@@ -27,7 +27,8 @@
                 }
               },
               "queryRef": "colaboradores.tipo_contrato",
-              "nativeQueryRef": "tipo_contrato"
+              "nativeQueryRef": "tipo_contrato",
+              "active": true
             }
           ]
         }

@@ -1,0 +1,82 @@
+/// Ausências (férias, baixas, faltas, licenças) — vista rh.vw_ausencias.
+table ausencias
+	lineageTag: e7caafba-43cf-4dad-9ddd-949aec88e0c3
+
+	/// Dias úteis de ausência (pela data de início da ausência).
+	measure 'Dias úteis' = SUM ( ausencias[dias_uteis] )
+		formatString: #,0
+		lineageTag: a147128a-e1fc-48f8-9ac5-1d2a37ed839f
+
+	/// Número de registos de ausência.
+	measure Ausências = COUNTROWS ( ausencias )
+		formatString: #,0
+		lineageTag: beb2f7b0-513c-40d3-86d9-5386673b8d3a
+
+	/// Data de fim da ausência; só nas linhas de detalhe (vazia nos subtotais).
+	measure 'Data de fim' = IF ( ISINSCOPE ( ausencias[data_inicio] ), MAX ( ausencias[data_fim] ) )
+		formatString: dd/MM/yyyy
+		lineageTag: 5588d1dc-7d2e-4a04-bd4f-a384487b155d
+
+	/// Número de colaboradores com pelo menos uma ausência no contexto.
+	measure 'Colaboradores com ausências' = DISTINCTCOUNT ( ausencias[colaborador_id] )
+		formatString: #,0
+		lineageTag: c696dde6-c06d-4531-878d-a9a65b193cf3
+
+	column id
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: fcbb88dd-d022-4914-b36e-d5318dd3eb6b
+		summarizeBy: none
+		sourceColumn: id
+
+	column colaborador_id
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: f16c6bd9-9824-46bc-9130-758cde96db32
+		summarizeBy: none
+		sourceColumn: colaborador_id
+
+	column tipo
+		dataType: string
+		lineageTag: 44d4c85e-8630-4e26-95c7-ff290a3a6b53
+		summarizeBy: none
+		sourceColumn: tipo
+
+	column data_inicio
+		dataType: dateTime
+		formatString: dd/MM/yyyy
+		lineageTag: 59957b7c-c0b2-4892-a4e3-c885e4ab624e
+		summarizeBy: none
+		sourceColumn: data_inicio
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column data_fim
+		dataType: dateTime
+		formatString: dd/MM/yyyy
+		lineageTag: 2f1eba4d-7097-4518-ba59-191dcbe0cc00
+		summarizeBy: none
+		sourceColumn: data_fim
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column dias_uteis
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 7e677777-fe8b-4b8f-8ea8-10174645e79b
+		summarizeBy: sum
+		sourceColumn: dias_uteis
+
+	partition ausencias = m
+		mode: import
+		source =
+				let
+				  Origem = PostgreSQL.Database(Servidor, BaseDados),
+				  Vista = Origem{[Schema = "rh", Item = "vw_ausencias"]}[Data],
+				  Tipos = Table.TransformColumnTypes(Vista, {{"id", Int64.Type}, {"colaborador_id", Int64.Type}, {"data_inicio", type date}, {"data_fim", type date}, {"dias_uteis", Int64.Type}})
+				in
+				  Tipos
+

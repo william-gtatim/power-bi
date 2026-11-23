@@ -1,0 +1,95 @@
+/// Calendário diário (rh.calendario), dimensão de datas.
+table calendario
+	lineageTag: c0f65908-feed-4dfd-bf6f-14be33f40d5a
+	dataCategory: Time
+
+	column data
+		dataType: dateTime
+		isUnique
+		isKey
+		formatString: dd/MM/yyyy
+		lineageTag: b500302c-7755-4c6c-b580-0649607c019e
+		summarizeBy: none
+		sourceColumn: data
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column ano
+		dataType: int64
+		formatString: 0
+		lineageTag: e3c6aa24-bfdb-4020-a7df-2132cbd19d8f
+		summarizeBy: none
+		sourceColumn: ano
+
+	column trimestre
+		dataType: int64
+		formatString: 0
+		lineageTag: 1a71d3fe-5042-44fb-b499-def0a4d8086d
+		summarizeBy: none
+		sourceColumn: trimestre
+
+	column mes
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 482d4851-136a-4286-b981-f791cf044cc1
+		summarizeBy: none
+		sourceColumn: mes
+
+	column nome_mes
+		dataType: string
+		lineageTag: 22cf1646-f0fc-4923-b6c4-27183e4215b9
+		summarizeBy: none
+		sourceColumn: nome_mes
+		sortByColumn: mes
+
+	column ano_mes
+		dataType: string
+		lineageTag: a004c694-1cc0-4423-8ac3-0ebf1495d08d
+		summarizeBy: none
+		sourceColumn: ano_mes
+
+	column dia
+		dataType: int64
+		formatString: 0
+		lineageTag: 1d4b96aa-bbc1-47ed-91a3-b17dd19eed09
+		summarizeBy: none
+		sourceColumn: dia
+
+	column dia_semana
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 083ff636-a211-475c-bbf3-1e00cb307f74
+		summarizeBy: none
+		sourceColumn: dia_semana
+
+	column nome_dia
+		dataType: string
+		lineageTag: 80779e55-8799-469e-b002-9f2b14b4f5da
+		summarizeBy: none
+		sourceColumn: nome_dia
+		sortByColumn: dia_semana
+
+	column e_feriado
+		dataType: boolean
+		lineageTag: dd0ba35f-f160-4bf0-9ae9-76efe0050d08
+		summarizeBy: none
+		sourceColumn: e_feriado
+
+	column dia_util
+		dataType: boolean
+		lineageTag: 23d056fd-a43c-4dc4-9067-4a8d70fb5020
+		summarizeBy: none
+		sourceColumn: dia_util
+
+	partition calendario = m
+		mode: import
+		source =
+				let
+				  Origem = PostgreSQL.Database(Servidor, BaseDados),
+				  Tabela = Origem{[Schema = "rh", Item = "calendario"]}[Data],
+				  Tipos = Table.TransformColumnTypes(Tabela, {{"data", type date}, {"ano", Int64.Type}, {"trimestre", Int64.Type}, {"mes", Int64.Type}, {"dia", Int64.Type}, {"dia_semana", Int64.Type}})
+				in
+				  Tipos
+

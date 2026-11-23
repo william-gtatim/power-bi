@@ -75,19 +75,7 @@ cultureInfo pt-BR
 			          "ConceptualProperty": "departamento"
 			        }
 			      },
-			      "State": "Generated",
-			      "Terms": [
-			        {
-			          "Departamento": {
-			            "State": "Suggested",
-			            "Source": {
-			              "Type": "External",
-			              "Agent": "PowerBI.VisualColumnRename"
-			            },
-			            "Weight": 0.9
-			          }
-			        }
-			      ]
+			      "State": "Generated"
 			    },
 			    "colaboradores.cargo": {
 			      "Definition": {
@@ -117,19 +105,7 @@ cultureInfo pt-BR
 			          "ConceptualProperty": "nivel"
 			        }
 			      },
-			      "State": "Generated",
-			      "Terms": [
-			        {
-			          "Nível": {
-			            "State": "Suggested",
-			            "Source": {
-			              "Type": "External",
-			              "Agent": "PowerBI.VisualColumnRename"
-			            },
-			            "Weight": 0.9
-			          }
-			        }
-			      ]
+			      "State": "Generated"
 			    },
 			    "colaboradores.chefia": {
 			      "Definition": {
@@ -247,6 +223,111 @@ cultureInfo pt-BR
 			      "Terms": [
 			        {
 			          "Motivo de saída": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "colaboradores.colaborador": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "colaboradores",
+			          "ConceptualProperty": "colaborador"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Colaborador": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "ausencias.colaboradores_com_ausências": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "ausencias",
+			          "ConceptualProperty": "Colaboradores com ausências"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Colaboradores": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "ausencias.tipo": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "ausencias",
+			          "ConceptualProperty": "tipo"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Tipo": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "ausencias.data_inicio": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "ausencias",
+			          "ConceptualProperty": "data_inicio"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Início": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "ausencias.data_de_fim": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "ausencias",
+			          "ConceptualProperty": "Data de fim"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Fim": {
 			            "State": "Suggested",
 			            "Source": {
 			              "Type": "External",
